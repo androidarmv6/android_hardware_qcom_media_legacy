@@ -4093,7 +4093,7 @@ OMX_ERRORTYPE  omx_vdec::use_output_buffer(
           drv_ctx.op_buf_ion_info[i].fd_ion_data.fd;
 #else
         drv_ctx.ptr_outputbuffer[i].pmem_fd = \
-          open (MEM_DEVICE,O_RDWR);
+          open (MEM_DEVICE,O_SYNC|O_RDWR);
 
         if (drv_ctx.ptr_outputbuffer[i].pmem_fd < 0) {
           return OMX_ErrorInsufficientResources;
@@ -4102,7 +4102,7 @@ OMX_ERRORTYPE  omx_vdec::use_output_buffer(
         if(drv_ctx.ptr_outputbuffer[i].pmem_fd == 0)
         {
           drv_ctx.ptr_outputbuffer[i].pmem_fd = \
-            open (MEM_DEVICE,O_RDWR);
+            open (MEM_DEVICE,O_SYNC|O_RDWR);
           if (drv_ctx.ptr_outputbuffer[i].pmem_fd < 0) {
             return OMX_ErrorInsufficientResources;
           }
@@ -4684,7 +4684,7 @@ OMX_ERRORTYPE  omx_vdec::allocate_input_buffer(
      }
     pmem_fd = drv_ctx.ip_buf_ion_info[i].fd_ion_data.fd;
 #else
-    pmem_fd = open (MEM_DEVICE,O_RDWR);
+    pmem_fd = open (MEM_DEVICE,O_SYNC|O_RDWR);
 
     if (pmem_fd < 0)
     {
@@ -4694,7 +4694,7 @@ OMX_ERRORTYPE  omx_vdec::allocate_input_buffer(
 
     if (pmem_fd == 0)
     {
-      pmem_fd = open (MEM_DEVICE,O_RDWR);
+      pmem_fd = open (MEM_DEVICE,O_SYNC|O_RDWR);
 
       if (pmem_fd < 0)
       {
@@ -5003,7 +5003,7 @@ OMX_ERRORTYPE  omx_vdec::allocate_output_buffer(
      }
     pmem_fd = drv_ctx.op_buf_ion_info[i].fd_ion_data.fd;
 #else
-    pmem_fd = open (MEM_DEVICE,O_RDWR);
+    pmem_fd = open (MEM_DEVICE,O_SYNC|O_RDWR);
 
     if (pmem_fd < 0)
     {
@@ -5014,7 +5014,7 @@ OMX_ERRORTYPE  omx_vdec::allocate_output_buffer(
 
     if (pmem_fd == 0)
     {
-      pmem_fd = open (MEM_DEVICE,O_RDWR);
+      pmem_fd = open (MEM_DEVICE,O_SYNC|O_RDWR);
 
       if (pmem_fd < 0)
       {
@@ -8805,7 +8805,7 @@ OMX_ERRORTYPE omx_vdec::vdec_alloc_h264_mv()
   if (allocation.align != 8192)
     allocation.align = 8192;
 
-  pmem_fd = open(MEM_DEVICE, O_RDWR);
+  pmem_fd = open(MEM_DEVICE,O_SYNC|O_RDWR);
 
   if ((int)(pmem_fd) < 0)
       return OMX_ErrorInsufficientResources;
